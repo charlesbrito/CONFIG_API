@@ -4,8 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from starlette import status
 from sqlalchemy.orm import Session
-from ..banco_de_dados.database import SessionLocal
-from ..banco_de_dados.models import User
+from banco_de_dados.database import SessionLocal
+from banco_de_dados.models import User
 from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
 from jose import jwt, JWTError

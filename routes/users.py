@@ -1,15 +1,15 @@
-from fastapi import FastAPI, status, Depends, HTTPException
-from ..banco_de_dados import models
-from ..banco_de_dados.database import engine, SessionLocal
+from fastapi import APIRouter, Depends, HTTPException, status
+from banco_de_dados import models
+from banco_de_dados.database import engine, SessionLocal
 from typing import Annotated
 from sqlalchemy.orm import Session
-from ..JWT import auth
-from ..JWT.auth import get_current_user
+from JWT import auth
+from JWT.auth import get_current_user
 
-app = FastAPI()
-app.include_router(auth.router)
+router = APIRouter()
+router.include_router(auth.router)
 
-models.base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 
 def get_db():
@@ -22,7 +22,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 user_dependency = Annotated[dict, Depends(get_current_user)]
 
-@app.get("/", status_code=status.HTTP_200_OK)
+@router.get("/", status_code=status.HTTP_200_OK)
 async def user(user: user_dependency, db:db_dependency):
     if user is None:
         raise HTTPException(status_code=401, detail='A autenticação falhou')

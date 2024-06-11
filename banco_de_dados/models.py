@@ -1,8 +1,8 @@
 from sqlalchemy import Boolean, Column, Integer, String
-from database import base
+from banco_de_dados.database import Base
 
 #Criação da tabela usuário com auntenticação JWT
-class User(base):
+class User(Base):
     __tablename__ = 'usuarios'
 
     id = Column(Integer, primary_key=True, index=True)
@@ -11,7 +11,7 @@ class User(base):
 
 
 #Criação da tabela posts.
-class Post(base):
+class Post(Base):
     __tablename__ = 'posts'
 
     id = Column(Integer, primary_key=True, index=True)
